@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Command;
 
 use Dotenv\Dotenv;
+use Dotenv\Repository\Adapter\EnvConstAdapter;
+use Dotenv\Repository\Adapter\PutenvAdapter;
 use Dotenv\Repository\RepositoryBuilder;
 use Hyperf\Command\Command as HyperfCommand;
-use Hyperf\Command\Annotation\Command;
 use Psr\Container\ContainerInterface;
 use Swoole\Process;
 use Symfony\Component\Console\Input\InputArgument;
@@ -29,9 +30,10 @@ class MulitiEnvCommand extends HyperfCommand {
      }
 
     public function handle() {
-        $argument = $this->input->getArgument('name') ?? 'dev';
-        $this->line('Hello ' . $argument, 'info');
-
+        //$argument = $this->input->getArgument('name') ?? 'dev';
+        //$this->line('Hello ' . $argument, 'info');
+        $this->start();
+        //$this->setEnv($argument);
     }
 
     protected function getArguments() {
@@ -52,7 +54,7 @@ class MulitiEnvCommand extends HyperfCommand {
         });
 
         # 通过commands的参数来选择指定环境下的配置文件
-        $argument = $this->input->getArgument('name') ?? 'dev';
+        //$argument = $this->input->getArgument('name') ?? 'dev';
 
 
         return $process->start();
@@ -71,14 +73,14 @@ class MulitiEnvCommand extends HyperfCommand {
      */
     private function setEnv($env) {
         if (file_exists(BASE_PATH . '/.env.' . $env)) {
+            # 构建自定义repository
             $repository = RepositoryBuilder::create()
                 ->withReaders([
-                    new Adapter\PutenvAdapter(),
-                ])
-                ->withWriters([
-                    new Adapter\PutenvAdapter(),
-                ])
-                ->immutable()
+                    new EnvConstAdapter(),
+                ])->withWriters([
+                    new EnvConstAdapter(),
+                    new PutenvAdapter(),
+                ])->immutable()
                 ->make();
 
             Dotenv::create($repository, [BASE_PATH], '.env.' . $env)->load();
