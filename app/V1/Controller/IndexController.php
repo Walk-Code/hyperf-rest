@@ -21,6 +21,7 @@ class IndexController extends AbstractController {
     public function index() {
         $user = $this->request->input('user', 'Hyperf');
         $method = $this->request->getMethod();
-        $this->responseSuccess($this->STATUS_200, config('cors.origin'));
+        $argv = getopt('D:');
+        $this->responseSuccess($this->STATUS_200, '获取commands命令', $argv);
     }
 }
