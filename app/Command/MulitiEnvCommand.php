@@ -8,6 +8,7 @@ use Dotenv\Dotenv;
 use Dotenv\Repository\Adapter\EnvConstAdapter;
 use Dotenv\Repository\Adapter\PutenvAdapter;
 use Dotenv\Repository\RepositoryBuilder;
+use Hyperf\Command\Annotation\Command;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerInterface;
 use Swoole\Process;
@@ -22,6 +23,9 @@ class MulitiEnvCommand extends HyperfCommand {
      */
     protected $container;
 
+    /**
+     * @var string
+     */
     protected $name = "run:env";
 
      public function configure() {
@@ -30,10 +34,10 @@ class MulitiEnvCommand extends HyperfCommand {
      }
 
     public function handle() {
-        //$argument = $this->input->getArgument('name') ?? 'dev';
-        //$this->line('Hello ' . $argument, 'info');
-        $this->start();
-        //$this->setEnv($argument);
+        $argument = $this->input->getArgument('name') ?? 'dev';
+        $this->line('Hello ' . $argument, 'info');
+        //$this->start();
+        $this->setEnv($argument);
     }
 
     protected function getArguments() {
@@ -47,17 +51,14 @@ class MulitiEnvCommand extends HyperfCommand {
      */
     private function start(){
         $this->clearRuntimeContainer();
-        $process = new Process(function (Process $childProcess) {
-            $argc = [BASE_PATH.'/bin/hyperf.php', 'start'];
-            $php = exec('which php');
-            $childProcess->exec($php, $argc);
-        });
-
         # 通过commands的参数来选择指定环境下的配置文件
-        //$argument = $this->input->getArgument('name') ?? 'dev';
+        $php = exec('which php');
+        $argc = [BASE_PATH.'/bin/hyperf.php', 'start'];
+        $process = new Process(function (Process $childProcess){
+            return $childProcess;
+        }, false, 0, false);
 
-
-        return $process->start();
+        $process->exec($php, $argc);
     }
 
     /**

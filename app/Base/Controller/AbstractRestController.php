@@ -38,6 +38,6 @@ abstract class AbstractRestController {
      * 返回错误响应信息
      */
     public function responseFailure($code, $msg) {
-        ResponseHelper::fail($code, $msg);
+        ResponseHelper::fail($this->STATUS_500, $msg);
     }
 }
