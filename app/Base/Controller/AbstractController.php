@@ -12,11 +12,16 @@ declare(strict_types=1);
 
 namespace App\Base\Controller;
 
+use App\Annotation\HttpRequestLog;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class AbstractController
+ * @package App\Base\Controller
+ */
 abstract class AbstractController extends AbstractRestController {
     /**
      * @Inject

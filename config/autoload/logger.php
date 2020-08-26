@@ -13,10 +13,10 @@ return [
     'default' => [
         'handlers' => [
             [   #'class' => Monolog\Handler\StreamHandler::class,
+                #'stream' => BASE_PATH . '/runtime/logs/hyperf.log',
                 # 按日期滚动
                 'class'       => Monolog\Handler\RotatingFileHandler::class,
                 'constructor' => [
-                    #'stream' => BASE_PATH . '/runtime/logs/hyperf.log',
                     'filename' => BASE_PATH . '/runtime/logs/hyperf.log',
                     'level'  => Monolog\Logger::INFO,
                 ],
@@ -33,9 +33,24 @@ return [
                 # 按日期滚动
                 'class'       => Monolog\Handler\RotatingFileHandler::class,
                 'constructor' => [
-                    #'stream' => BASE_PATH . '/runtime/logs/hyperf-debug.log',
                     'filename' => BASE_PATH . '/runtime/logs/hyperf-debug.log',
                     'level'  => Monolog\Logger::DEBUG,
+                ],
+                'formatter'   => [
+                    'class'       => Monolog\Formatter\LineFormatter::class,
+                    'constructor' => [
+                        'format'                => null,
+                        'dateFormat'            => 'Y-m-d H:i:s',
+                        'allowInlineLineBreaks' => true,
+                    ],
+                ],
+            ],
+            [
+                # 按日期滚动
+                'class'       => Monolog\Handler\RotatingFileHandler::class,
+                'constructor' => [
+                    'filename' => BASE_PATH . '/runtime/logs/hyperf-error.log',
+                    'level'  => Monolog\Logger::ERROR,
                 ],
                 'formatter'   => [
                     'class'       => Monolog\Formatter\LineFormatter::class,

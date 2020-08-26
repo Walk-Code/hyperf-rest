@@ -12,10 +12,15 @@ declare(strict_types=1);
 
 namespace App\V1\Controller;
 
+use App\Annotation\HttpRequestLog;
 use App\Base\Controller\AbstractController;
 use Hyperf\Logger\LoggerFactory;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class IndexController
+ * @package App\V1\Controller
+ */
 class IndexController extends AbstractController {
 
     /**
@@ -30,7 +35,6 @@ class IndexController extends AbstractController {
 
     public function index() {
         $argv = config('cors.origin');
-        $this->logger->debug('Your log message.');
         $this->responseSuccess($this->STATUS_200, '获取commands命令', [$argv]);
     }
 }

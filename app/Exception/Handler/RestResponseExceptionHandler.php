@@ -4,6 +4,7 @@
 namespace App\Exception\Handler;
 
 
+use App\Annotation\HttpRequestLog;
 use App\Exception\Core\BusinessException;
 use Hyperf\ExceptionHandler\ExceptionHandler;
 use Hyperf\HttpMessage\Stream\SwooleStream;
@@ -17,6 +18,7 @@ use Throwable;
  */
 class RestResponseExceptionHandler extends ExceptionHandler {
     /**
+     * @HttpRequestLog()
      * Handle the exception, and return the specified result.
      */
     public function handle(Throwable $throwable, ResponseInterface $response) {

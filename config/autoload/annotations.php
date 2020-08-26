@@ -17,5 +17,8 @@ return [
         'ignore_annotations' => [
             'mixin',
         ],
+        'collectors' => [
+
+        ]
     ],
 ];
