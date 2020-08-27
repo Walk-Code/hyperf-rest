@@ -14,3 +14,4 @@ use App\Middleware\CorsMiddleware;
 use Hyperf\HttpServer\Router\Router;
 
 Router::addRoute(['GET', 'POST', 'HEAD', 'OPTIONS'], '/', 'App\V1\Controller\IndexController@index',['middleware' => [CorsMiddleware::class]]);
+Router::addRoute(['GET', 'POST', 'HEAD', 'OPTIONS'], '/upload', 'App\V1\Controller\IndexController@upload',['middleware' => [CorsMiddleware::class]]);

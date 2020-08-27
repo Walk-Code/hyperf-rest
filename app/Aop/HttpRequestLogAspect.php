@@ -3,7 +3,6 @@
 namespace App\Aop;
 
 use App\Annotation\HttpRequestLog;
-use App\Utils\IpHelper;
 use Hyperf\Di\Annotation\Aspect;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Di\Aop\AbstractAspect;
@@ -27,6 +26,12 @@ class HttpRequestLogAspect extends AbstractAspect {
      */
     protected $request;
 
+    /**
+     * @Inject
+     * @var \Hyperf\Contract\SessionInterface
+     */
+    protected $session;
+
     public $annotations = [
         HttpRequestLog::class,
     ];
@@ -43,30 +48,57 @@ class HttpRequestLogAspect extends AbstractAspect {
         $this->before();
         $result = $proceedingJoinPoint->process();
         $endTime = microtime(true);
-        $space = str_repeat(' ', 20);
-        $this->logger->info('Response Args' . $space . ' : ' . json_encode($proceedingJoinPoint->result));
-        $this->logger->info('Time-Consuming' . $space . ' : ' . ($endTime - $startTime) . 'ms');
+        $space = str_repeat(' ', 21);
+        $this->logger->info('Time-Consuming' . $space . ' : ', [($endTime - $startTime) . 'ms']);
         $this->after();
 
         return $result;
     }
 
+    /**
+     * 切入点前执行
+     */
     private function before() {
-        $uri = $this->request->path();
         $url = $this->request->url();
         $method = $this->request->getMethod();
-        $ip = IpHelper::getIP();
+        $ip = $this->getIP();
         $delimiter = str_repeat('=', 30);
         $space = str_repeat(' ', 20);
         $this->logger->info($delimiter . 'start' . $delimiter);
-        $this->logger->info('URL' . $space . ' : ' . $url);
-        $this->logger->info('HTTP Method' . $space . ' : ' . $method);
-        $this->logger->info('IP' . $space . ' : ' . $ip);
-        $this->logger->info('Request Args' . $space . ' : ' . json_encode($this->request->all()));
+        $this->logger->info('URL            ' . $space . ' : ', [$url]);
+        $this->logger->info('IP             ' . $space . ' : ', [$ip]);
+        $this->logger->info('HTTP Method    ' . $space . ' : ', [$method]);
+        $this->logger->info('Content-Type   ' . $space . ' : ', $this->request->getHeader('Content-Type'));
+        $this->logger->info('Headers        ' . $space . ' : ', $this->request->getHeaders());
+        $this->logger->info('Server Params  ' . $space . ' : ', $this->request->getServerParams());
+        $this->logger->info('Cookies        ' . $space . ' : ', $this->request->getCookieParams());
+        $this->logger->info('Request Params ' . $space . ' : ', $this->request->getParsedBody());
     }
 
+    /**
+     * 切入点后执行
+     */
     private function after() {
-        $delimiter = str_repeat('=', 30);
+        $delimiter = str_repeat('=', 31);
         $this->logger->info($delimiter . 'end' . $delimiter);
+    }
+
+    /**
+     * 获取用户ip
+     * @return mixed
+     */
+    public function getIP() {
+        if (!empty($this->request->getHeader('CLIENT_IP'))) {
+            $ip = $this->request->getServerParams()['client_ip'];
+        } else if (!empty($this->request->getHeader('X_FORWARDED_FOR'))) {
+            # 存在多级代理
+            $ip = $this->request->getHeader('X_FORWARDED_FOR');
+        } else if (!empty($this->request->getHeader('X_REAL_IP'))) {
+            $ip = $this->request->getHeader('X_REAL_IP');
+        } else {
+            $ip = $this->request->getServerParams()['remote_addr'];
+        }
+
+        return $ip;
     }
 }
