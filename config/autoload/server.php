@@ -37,8 +37,8 @@ return [
         'socket_buffer_size' => 2 * 1024 * 1024,
         'buffer_output_size' => 2 * 1024 * 1024,
         # 'daemonize' => 1, #守护进程运行
-        'document_root' => BASE_PATH. '/public',
-        'enable_static_handler' => true
+        #'document_root' => BASE_PATH. '/public',
+        #'enable_static_handler' => true
     ],
     'callbacks' => [
         SwooleEvent::ON_WORKER_START => [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, 'onWorkerStart'],
