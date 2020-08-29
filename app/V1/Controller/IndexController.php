@@ -14,6 +14,8 @@ namespace App\V1\Controller;
 
 use App\Base\Controller\AbstractController;
 use Hyperf\Logger\LoggerFactory;
+use Hyperf\Paginator\Paginator;
+use Hyperf\Utils\Collection;
 use Psr\Log\LoggerInterface;
 
 class IndexController extends AbstractController {
@@ -30,7 +32,17 @@ class IndexController extends AbstractController {
 
     public function index() {
         $argv = config('cors.origin');
-        $this->logger->debug('Your log message.');
-        $this->responseSuccess($this->STATUS_200, '获取commands命令', [$argv]);
+        $currentPage = (int)$this->getParamDefaultValue('page', 1);
+        $perPage = (int)$this->getParamDefaultValue('pageSize', 10);
+        $collection = new Collection([
+            ['id' => 1, 'name' => 'Tom'],
+            ['id' => 2, 'name' => 'Sam'],
+            ['id' => 3, 'name' => 'Tim'],
+            ['id' => 4, 'name' => 'Joe'],
+        ]);
+
+        $users = array_values($collection->forPage($currentPage, $perPage)->toArray());
+
+        return new Paginator($users, $perPage, $currentPage);
     }
 }

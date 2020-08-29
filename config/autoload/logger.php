@@ -30,7 +30,6 @@ return [
                 ],
             ],
             [
-                # 按日期滚动
                 'class'       => Monolog\Handler\RotatingFileHandler::class,
                 'constructor' => [
                     #'stream' => BASE_PATH . '/runtime/logs/hyperf-debug.log',
