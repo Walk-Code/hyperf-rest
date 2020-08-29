@@ -14,5 +14,6 @@ use App\Middleware\CorsMiddleware;
 
 return [
     'http' => [
+        \Hyperf\Session\Middleware\SessionMiddleware::class,
     ],
 ];
