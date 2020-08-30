@@ -12,11 +12,20 @@ declare(strict_types=1);
 
 namespace App\Base\Controller;
 
-/**
+use Hyperf\Di\Annotation\Inject;
+use Hyperf\HttpServer\Contract\RequestInterface;
+
+/** TODO 需要调整
  * Class AbstractController
  * @package App\Base\Controller
  */
 abstract class AbstractController extends AbstractRestController {
+
+    /**
+     * @Inject
+     * @var RequestInterface
+     */
+    protected $request;
     /**
      * 获取客户端id
      * @return mixed
