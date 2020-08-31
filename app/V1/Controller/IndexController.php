@@ -26,7 +26,7 @@ use Psr\Log\LoggerInterface;
  * Class IndexController
  * @package App\V1\Controller
  */
-class IndexController extends AbstractController {// TODO 临时文件未删除
+class IndexController extends AbstractController {
     /**
      * @var LoggerInterface
      */
@@ -47,7 +47,11 @@ class IndexController extends AbstractController {// TODO 临时文件未删除
         $fileName = 'apache-jmeter-4.0.rar';
         $getAllFragmentization = $redis->zRange($fileName, 0, -1);
         # 分片上传完后进行分片合并
-        $originFilePath            = BASE_PATH . '/runtime/'.'uploads/' . $fileName;
+        $originDir = BASE_PATH . '/runtime/'.'uploads/';
+        $originFilePath            = $originDir . $fileName;
+        if (!is_dir($originDir)) {
+            mkdir($originDir);
+        }
         $originFilef = fopen($originFilePath,"w+");
         AssertsHelper::notNull($originFilef, '打开文件失败。');
         $getAllFragmentization = $redis->zRange($fileName, 0, -1);
@@ -75,7 +79,7 @@ class IndexController extends AbstractController {// TODO 临时文件未删除
         # 分片总数量
         $chunks = $this->request->input('chunks', 0);
         AssertsHelper::notNull($chunks, '分片总数不能为空');
-        # 当分片总数只有2M或者小于两M时直接进行上床
+        # 当分片总数只有2M或者小于两M时直接进行上传
         if ($chunks == 1) {
             $stream = fopen($file->getRealPath(), 'r+');
             $filesystem->writeStream(
@@ -99,8 +103,13 @@ class IndexController extends AbstractController {// TODO 临时文件未删除
                 $redis->zAdd($redisKey, [], $chunk, $tmpPath);
                 $uploadCount = $redis->zCard($redisKey);
                 # 分片上传完后进行分片合并
-                $originFilePath            = BASE_PATH . '/runtime/'.'uploads/' . $fileName;
+                $originDir = BASE_PATH . '/runtime/'.'uploads/';
+                $originFilePath            = $originDir . $fileName;
+                if (!is_dir($originDir)) {
+                    mkdir($originDir);
+                }
                 $originFilef = fopen($originFilePath,"w+");
+                AssertsHelper::notNull($originFilef, '打开文件失败。');
                 $getAllFragmentization = $redis->zRange($redisKey, 0, -1);
                 if ($getAllFragmentization && is_array($getAllFragmentization)) {
                     foreach ($getAllFragmentization as $temp) {
