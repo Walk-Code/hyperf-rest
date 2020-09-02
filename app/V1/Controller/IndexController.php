@@ -93,7 +93,7 @@ class IndexController extends AbstractController {
             AssertsHelper::notNull($chunk, '分片数不能未空');
             $redis     = ApplicationContext::getContainer()->get(Redis::class);
             $redisKey  = $fileName;
-            $tmpPath   = 'uploads_tmp/' . $file->getClientFilename() . '_' . $chunk;
+            $tmpPath   = 'uploads_tmp/' . $fileName . '_' . $chunk;
             $stream    = fopen($file->getRealPath(), 'r+');
             $isSuccess = $filesystem->writeStream($tmpPath, $stream);
             fclose($stream);
