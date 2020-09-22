@@ -4,13 +4,19 @@
 namespace App\Auth\Controller;
 
 
-use App\Auth\Service\MenuService;
+use App\Auth\Service\RoleService;
 use App\Constants\ResponseCode;
 use App\Exception\Utils\ResponseHelper;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 
-class MenuController {
+class RoleController {
+
+    /**
+     * @Inject
+     * @var RoleService
+     */
+    private $roleService;
 
     /**
      * @Inject
@@ -18,32 +24,19 @@ class MenuController {
      */
     private $request;
 
-    /**
-     * @Inject
-     * @var MenuService
-     */
-    private $menuService;
-
-    public function getList() {
+    public function getList(){
+        $name = $this->request->input('searchText', '');
         $page = $this->request->input('page', 1);
         $pageSize = $this->request->input('pageSize', 10);
         $pageSize = $pageSize > config('app.max_page_size') ? config('app.max_page_size') : $pageSize;
-        $title = $this->request->input('searchText', '');
-        $data = $this->menuService->getList($title, $page, $pageSize);
-
-        ResponseHelper::success(ResponseCode::SUCCESS, ResponseCode::getMessage(ResponseCode::SUCCESS), $data);
-    }
-
-    public function toTree() {
-        $data = $this->menuService->toTree();
+        $data = $this->roleService->getList($name, $page, $pageSize);
 
         ResponseHelper::success(ResponseCode::SUCCESS, ResponseCode::getMessage(ResponseCode::SUCCESS), $data);
     }
 
     public function create() {
         $jsonArr = $this->request->getParsedBody();
-        $this->menuService->createOrEdit($jsonArr);
-
-        ResponseHelper::success(ResponseCode::SUCCESS, ResponseCode::getMessage(ResponseCode::SUCCESS));
+        $this->roleService->create($jsonArr);
     }
+
 }

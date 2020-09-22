@@ -22,7 +22,7 @@ class Menu extends Model {
     public static function getList($title, $page, $pageSize): LengthAwarePaginatorInterface {
         $menu = Menu::query();
         if (!empty($title)) {
-            $menu->where($title, 'like', $title . '%');
+            $menu->where('title', 'like', $title . '%');
         }
         $menu->orderBy('order', 'ASC');
 

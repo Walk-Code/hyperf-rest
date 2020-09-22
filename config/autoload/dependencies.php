@@ -10,5 +10,6 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 return [
-    \App\Auth\Service\MenuService::class => \App\Auth\Service\Impl\MenuServiceImpl::class
+    \App\Auth\Service\MenuService::class => \App\Auth\Service\Impl\MenuServiceImpl::class,
+    \App\Auth\Service\RoleService::class => \App\Auth\Service\Impl\RoleServiceImpl::class,
 ];

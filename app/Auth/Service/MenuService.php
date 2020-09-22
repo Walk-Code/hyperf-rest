@@ -12,6 +12,9 @@ interface MenuService {
 
     /**
      * 获取列表数据
+     * @param $title
+     * @param $page
+     * @param $pageSize
      * @return mixed
      */
     public function getList($title, $page, $pageSize);
