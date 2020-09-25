@@ -27,4 +27,12 @@ class RoleUsers extends Model {
 
         return $roleUsers->save();
     }
+
+    /**
+     * 通过角色id删除角色用户信息
+     * @param $roleId
+     */
+    public static function deleteByRoleId($roleId) {
+        return RoleUsers::query()->where('role_id', '=', $roleId)->delete();
+    }
 }

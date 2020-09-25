@@ -74,4 +74,13 @@ class Role extends Model {
         return Role::query()->where('id', '=', $id)->first();
     }
 
+    /**
+     * 更新记录
+     * @param array $data
+     * @return bool|void
+     */
+    public static function updateData($data) {
+        return Role::query()->where('id', '=', $data['id'])->update($data);
+    }
+
 }

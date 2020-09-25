@@ -27,4 +27,12 @@ class RoleMenu extends Model {
 
         return $roleMenu->save();
     }
+
+    /**
+     * 通过角色id删除菜单
+     * @param $roleId
+     */
+    public static function deleteByRoleId($roleId) {
+        return RoleMenu::query()->where('role_id', '=', $roleId)->delete();
+    }
 }

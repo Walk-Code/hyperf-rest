@@ -11,9 +11,11 @@ declare(strict_types=1);
  */
 
 use App\Middleware\CorsMiddleware;
+use  Hyperf\Apidog\Middleware\ApiValidationMiddleware;
 
 return [
     'http' => [
         \Hyperf\Session\Middleware\SessionMiddleware::class,
+       ApiValidationMiddleware::class
     ],
 ];

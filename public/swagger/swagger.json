@@ -1,0 +1,479 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "hyperf swagger api desc",
+        "version": "1.0.0",
+        "title": "HYPERF API DOC"
+    },
+    "host": "0.0.0.0",
+    "schemes": [
+        "http"
+    ],
+    "definitions": {
+        "RoleOkResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 200,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "operation successful.",
+                    "type": "string"
+                },
+                "data": []
+            }
+        },
+        "RoleFailResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 500,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "operation fail.",
+                    "type": "string"
+                }
+            }
+        },
+        "RoleValidateFailResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 500,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "Params is invalid.",
+                    "type": "string"
+                }
+            }
+        },
+        "ModelArray": {
+            "type": "array",
+            "required": [],
+            "items": {
+                "type": "string"
+            }
+        },
+        "ModelObject": {
+            "type": "object",
+            "required": [],
+            "items": {
+                "type": "string"
+            }
+        },
+        "V1SystemRoleGetListGetResponse200DataData": false,
+        "V1SystemRoleGetListGetResponse200Data": {
+            "properties": {
+                "current_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "data": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "#/definitions/V1SystemRoleGetListGetResponse200DataData"
+                    }
+                },
+                "first_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "from": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "last_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "last_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "next_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "path": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/"
+                },
+                "per_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 10
+                },
+                "prev_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "to": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "total": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 0
+                }
+            }
+        },
+        "V1SystemRoleGetListGetResponse200": {
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 200
+                },
+                "message": {
+                    "type": "string",
+                    "description": "",
+                    "default": "operation successful."
+                },
+                "data": {
+                    "description": "",
+                    "$ref": "#/definitions/V1SystemRoleGetListGetResponse200Data"
+                }
+            }
+        },
+        "PostV1SystemRoleAdd": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "角色名称"
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "角色块"
+                }
+            }
+        },
+        "PostV1SystemRoleAddMenu": {
+            "type": "object",
+            "properties": {
+                "menuIds": {
+                    "type": "string",
+                    "description": "菜单id,多个菜单id使用逗号隔开"
+                },
+                "roleId": {
+                    "type": "string",
+                    "description": "角色id"
+                }
+            }
+        },
+        "PostV1SystemRoleAddAdminUser": {
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "string",
+                    "description": "系统用户id,多个系统用户id使用逗号隔开"
+                },
+                "roleId": {
+                    "type": "string",
+                    "description": "角色id"
+                }
+            }
+        },
+        "DeleteV1SystemRoleDelete": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "角色id"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "角色管理",
+            "description": "角色的新增/修改/删除/添加菜单/删除菜单/添加用户/删除用户接口"
+        }
+    ],
+    "paths": {
+        "/v1/system/role/getList": {
+            "get": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "角色列表",
+                "operationId": "V1SystemRoleGetListGET",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "searchText",
+                        "description": "角色名称模糊搜索",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "页码",
+                        "required": false,
+                        "type": "string",
+                        "default": "1"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "description": "分页数",
+                        "required": false,
+                        "type": "string",
+                        "default": "10"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表信息",
+                        "schema": {
+                            "$ref": "#/definitions/V1SystemRoleGetListGetResponse200"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/role/add": {
+            "post": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "添加角色",
+                "operationId": "V1SystemRoleAddPOST",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PostV1SystemRoleAdd"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/v1/system/role/addMenu": {
+            "post": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "角色添加菜单",
+                "operationId": "V1SystemRoleAddMenuPOST",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PostV1SystemRoleAddMenu"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/v1/system/role/addAdminUser": {
+            "post": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "角色添加菜单",
+                "operationId": "V1SystemRoleAddAdminUserPOST",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PostV1SystemRoleAddAdminUser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/v1/system/role/delete": {
+            "delete": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "删除角色",
+                "operationId": "V1SystemRoleDeleteDELETE",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteV1SystemRoleDelete"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        }
+    }
+}

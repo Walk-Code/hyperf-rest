@@ -82,4 +82,12 @@ class Menu extends Model {
     public static function findById($id) {
         return Menu::query()->where('id', '=', $id)->first();
     }
+
+    /**
+     * 校验菜单是否存在
+     * @param $ids
+     */
+    public static function checkMenuExtis($ids) {
+        return Menu::query()->whereIn('id', $ids)->get()->toArray();
+    }
 }

@@ -36,4 +36,19 @@ interface RoleService {
      * @return mixed
      */
     public function create($jsonArr);
+
+    /**
+     * 修改角色
+     * @param $jsonArr
+     * @return mixed
+     */
+    public function update($jsonArr);
+
+
+    /**
+     * 删除角色
+     * @param $id
+     * @return mixed
+     */
+    public function delete($jsonArr);
 }
