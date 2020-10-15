@@ -51,4 +51,18 @@ interface RoleService {
      * @return mixed
      */
     public function delete($jsonArr);
+
+    /**
+     * 删除角色对应菜单
+     * @param $jsonArr
+     * @return mixed
+     */
+    public function deleteMenus($jsonArr);
+
+    /**
+     * 删除角色对应用户
+     * @param $jsonArr
+     * @return mixed
+     */
+    public function deleteUsers($jsonArr);
 }

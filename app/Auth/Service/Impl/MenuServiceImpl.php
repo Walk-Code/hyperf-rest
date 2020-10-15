@@ -5,6 +5,7 @@ namespace App\Auth\Service\Impl;
 
 
 use App\Auth\Model\Menu;
+use App\Auth\Model\RoleMenu;
 use App\Auth\Service\MenuService;
 use App\Constants\ResponseCode;
 use App\Exception\Utils\AssertsHelper;
@@ -37,23 +38,35 @@ class MenuServiceImpl implements MenuService {
      * @param $type 1-create, 2-edit
      * @return mixed|void
      */
-    public function createOrEdit($data) {
-        AssertsHelper::notNull(isset($data['type']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['type']));
+    public function createOrEdit($jsonArr) {
+        AssertsHelper::notNull(isset($jsonArr['type']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['type']));
         // 需要校验菜单是否存在
-        if ($data['type'] == 2) {
-            AssertsHelper::notNull(isset($data['id']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['id']));
-            $isExtis = Menu::findById($data['id']);
+        if ($jsonArr['type'] == 2) {
+            AssertsHelper::notNull(isset($jsonArr['id']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['id']));
+            $isExtis = Menu::findById($jsonArr['id']);
             AssertsHelper::notNull($isExtis, ResponseCode::getMessage(ResponseCode::NO_FOUND));
-        }else {
-            $data['id'] = 0;
+        } else {
+            $jsonArr['id'] = 0;
         }
-        AssertsHelper::notNull(isset($data['title']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['title']));
-        AssertsHelper::notNull(isset($data['parent_id']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['parent_id']));
-        AssertsHelper::notNull(isset($data['order']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['order']));
-        AssertsHelper::notNull(isset($data['icon']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['icon']));
-        AssertsHelper::notNull(isset($data['uri']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['uri']));
-        $result = Menu::saveOrUpdate($data);
+        AssertsHelper::notNull(isset($jsonArr['title']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['title']));
+        AssertsHelper::notNull(isset($jsonArr['parent_id']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['parentId']));
+        AssertsHelper::notNull(isset($jsonArr['order']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['order']));
+        AssertsHelper::notNull(isset($jsonArr['icon']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['icon']));
+        AssertsHelper::notNull(isset($jsonArr['uri']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['uri']));
+        $result = Menu::saveOrUpdate($jsonArr);
         AssertsHelper::notNull($result, ResponseCode::getMessage(ResponseCode::FAILED));
     }
 
+    /**
+     * 删除菜单
+     * @param $id
+     * @return mixed
+     */
+    public function delete($jsonArr) {
+        AssertsHelper::notNull(isset($data['id']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['id']));
+        $isExtis = Menu::findById($jsonArr['id']);
+        AssertsHelper::notNull($isExtis, ResponseCode::getMessage(ResponseCode::NO_FOUND));
+        RoleMenu::deleteByMenuId($jsonArr['id']);
+        Menu::deleteById($jsonArr['id']);
+    }
 }

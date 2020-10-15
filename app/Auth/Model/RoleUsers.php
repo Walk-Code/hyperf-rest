@@ -35,4 +35,13 @@ class RoleUsers extends Model {
     public static function deleteByRoleId($roleId) {
         return RoleUsers::query()->where('role_id', '=', $roleId)->delete();
     }
+
+    /**
+     * 通过角色id和用户id删除用户（支持多用户id）
+     * @param $roleId
+     * @param $menuIdArr
+     */
+    public static function deleteByRoleIdAndMenuId($roleId, $userIdArr) {
+        return RoleUsers::query()->whereIn('user_id', $userIdArr)->where('role_id', '=', $roleId)->delete();
+    }
 }

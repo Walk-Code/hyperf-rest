@@ -35,4 +35,21 @@ class RoleMenu extends Model {
     public static function deleteByRoleId($roleId) {
         return RoleMenu::query()->where('role_id', '=', $roleId)->delete();
     }
+
+    /**
+     * 通过角色id和菜单id删除菜单（支持多菜单id）
+     * @param $roleId
+     * @param $menuIdArr
+     */
+    public static function deleteByRoleIdAndMenuId($roleId, $menuIdArr) {
+        return RoleMenu::query()->whereIn('menu_id', $menuIdArr)->where('role_id', '=', $roleId)->delete();
+    }
+
+    /**
+     * 通过菜单id删除关系
+     * @param $menuId
+     */
+    public static function deleteByMenuId($menuId) {
+        return RoleMenu::query()->where('menu_id', $menuId)->delete();
+    }
 }

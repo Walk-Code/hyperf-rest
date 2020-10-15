@@ -37,5 +37,12 @@ interface MenuService {
      * @param $url
      * @return mixed
      */
-    public function createOrEdit($jsonObj);
+    public function createOrEdit($jsonArr);
+
+    /**
+     * 删除菜单
+     * @param $id
+     * @return mixed
+     */
+    public function delete($jsonArr);
 }

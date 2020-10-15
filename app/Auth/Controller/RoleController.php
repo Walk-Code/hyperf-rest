@@ -17,6 +17,7 @@ use Hyperf\Apidog\Annotation\DeleteApi;
 use Hyperf\Apidog\Annotation\GetApi;
 use Hyperf\Apidog\Annotation\Header;
 use Hyperf\Apidog\Annotation\PostApi;
+use Hyperf\Apidog\Annotation\PutApi;
 use Hyperf\Apidog\Annotation\Query;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
@@ -146,4 +147,63 @@ class RoleController {
 
         ResponseHelper::success(ResponseCode::SUCCESS, ResponseCode::getMessage(ResponseCode::SUCCESS));
     }
+
+    /**
+     * @Author walk-code
+     * @PutApi(path="/system/role/update", description="修改角色")
+     * @Header(key="Content-Type|报文类型",rule="string" , description="设置为application/json")
+     * @Body(rules={
+     *     "id|角色id": "required",
+     *     "name|角色名称": "required",
+     *     "slug|角色块": "required"
+     *     })
+     * @ApiResponse(code="200", description="操作成功", schema={"$ref": "RoleOkResponse"})
+     * @ApiResponse(code="422", description="参数错误", schema={"$ref": "RoleValidateFailResponse"})
+     * @ApiResponse(code="500", description="操作失败", schema={"$ref": "RoleFailResponse"})
+     */
+    public function update() {
+        $jsonArr = $this->request->getParsedBody();
+        $this->roleService->update($jsonArr);
+
+        ResponseHelper::success(ResponseCode::SUCCESS, ResponseCode::getMessage(ResponseCode::SUCCESS));
+    }
+
+    /**
+     * @Author walk-code
+     * @DeleteApi(path="/system/role/delete/menu", description="删除角色菜单")
+     * @Header(key="Content-Type|报文类型",rule="string" , description="设置为application/json")
+     * @Body(rules={
+     *     "roleId|角色id": "required",
+     *     "menuIds|菜单id多个菜单id使用逗号隔开": "required"
+     *     })
+     * @ApiResponse(code="200", description="操作成功", schema={"$ref": "RoleOkResponse"})
+     * @ApiResponse(code="422", description="参数错误", schema={"$ref": "RoleValidateFailResponse"})
+     * @ApiResponse(code="500", description="操作失败", schema={"$ref": "RoleFailResponse"})
+     */
+    public function deleteMenu() {
+        $jsonArr = $this->request->getParsedBody();
+        $this->roleService->deleteMenus($jsonArr);
+
+        ResponseHelper::success(ResponseCode::SUCCESS, ResponseCode::getMessage(ResponseCode::SUCCESS));
+    }
+
+    /**
+     * @Author walk-code
+     * @DeleteApi(path="/system/role/delete/user", description="删除角色用户")
+     * @Header(key="Content-Type|报文类型",rule="string" , description="设置为application/json")
+     * @Body(rules={
+     *     "roleId|角色id": "required",
+     *     "userIds|用户id多个用户id使用逗号隔开": "required"
+     *     })
+     * @ApiResponse(code="200", description="操作成功", schema={"$ref": "RoleOkResponse"})
+     * @ApiResponse(code="422", description="参数错误", schema={"$ref": "RoleValidateFailResponse"})
+     * @ApiResponse(code="500", description="操作失败", schema={"$ref": "RoleFailResponse"})
+     */
+    public function deleteUser() {
+        $jsonArr = $this->request->getParsedBody();
+        $this->roleService->deleteUsers($jsonArr);
+
+        ResponseHelper::success(ResponseCode::SUCCESS, ResponseCode::getMessage(ResponseCode::SUCCESS));
+    }
+
 }

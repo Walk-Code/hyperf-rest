@@ -44,7 +44,7 @@ class RoleServiceImpl implements RoleService {
             $data['role_id'] = $data['roleId'];
             $data['menu_id'] = $menuId;
             $result = RoleMenu::saveOrUpdate($data);
-            AssertsHelper::notNull($result,  ResponseCode::getMessage(ResponseCode::FAILED));
+            AssertsHelper::notNull($result, ResponseCode::getMessage(ResponseCode::FAILED));
         }
     }
 
@@ -66,7 +66,7 @@ class RoleServiceImpl implements RoleService {
             $data['role_id'] = $data['roleId'];
             $data['menu_id'] = $userId;
             $result = RoleUsers::saveOrUpdate($data);
-            AssertsHelper::notNull($result,  ResponseCode::getMessage(ResponseCode::FAILED));
+            AssertsHelper::notNull($result, ResponseCode::getMessage(ResponseCode::FAILED));
         }
     }
 
@@ -79,7 +79,7 @@ class RoleServiceImpl implements RoleService {
         AssertsHelper::notNull(isset($jsonArr['name']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['name']));
         AssertsHelper::notNull(isset($jsonArr['slug']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['slug']));
         $result = Role::saveOrUpdate($jsonArr);
-        AssertsHelper::notNull($result,  ResponseCode::getMessage(ResponseCode::FAILED));
+        AssertsHelper::notNull($result, ResponseCode::getMessage(ResponseCode::FAILED));
     }
 
     /**
@@ -93,7 +93,7 @@ class RoleServiceImpl implements RoleService {
         AssertsHelper::notNull(isset($jsonArr['slug']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['slug']));
         $jsonArr['updated_at'] = date('Y-m-d H:i:s');
         $result = Role::updateData($jsonArr);
-        AssertsHelper::notNull($result,  ResponseCode::getMessage(ResponseCode::FAILED));
+        AssertsHelper::notNull($result, ResponseCode::getMessage(ResponseCode::FAILED));
     }
 
     /**
@@ -107,13 +107,41 @@ class RoleServiceImpl implements RoleService {
         Db::connection('system')->transaction(function () use ($id) {
             AssertsHelper::notNull($id, ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['id']));
             $delMenuResult = RoleMenu::deleteByRoleId($id);
-            AssertsHelper::notNull($delMenuResult,  ResponseCode::getMessage(ResponseCode::FAILED));
+            AssertsHelper::notNull($delMenuResult, ResponseCode::getMessage(ResponseCode::FAILED));
 
             $delUserResult = RoleUsers::deleteByRoleId($id);
-            AssertsHelper::notNull($delUserResult,  ResponseCode::getMessage(ResponseCode::FAILED));
+            AssertsHelper::notNull($delUserResult, ResponseCode::getMessage(ResponseCode::FAILED));
 
             $result = Role::deleteById($id);
-            AssertsHelper::notNull($result,  ResponseCode::getMessage(ResponseCode::FAILED));
+            AssertsHelper::notNull($result, ResponseCode::getMessage(ResponseCode::FAILED));
         });
+    }
+
+    /**
+     * 删除角色对应菜单
+     * @param $jsonArr
+     * @return mixed
+     */
+    public function deleteMenus($jsonArr) {
+        $data = $jsonArr;
+        AssertsHelper::notNull(isset($data['menuIds']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['menuIds']));
+        AssertsHelper::notNull(isset($data['roleId']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['roleId']));
+        $menuIdArr = explode(',', $data['menuIds']);
+        $result = RoleMenu::deleteByRoleIdAndMenuId($data['roleId'], $menuIdArr);
+        AssertsHelper::notNull($result, ResponseCode::getMessage(ResponseCode::FAILED));
+    }
+
+    /**
+     * 删除角色对应用户
+     * @param $jsonArr
+     * @return mixed
+     */
+    public function deleteUsers($jsonArr) {
+        $data = $jsonArr;
+        AssertsHelper::notNull(isset($data['userIds']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['userIds']));
+        AssertsHelper::notNull(isset($data['roleId']), ResponseCode::getMessage(ResponseCode::SYSTEM_INVALID, ['roleId']));
+        $userIdArr = explode(',', $data['userIds']);
+        $result = RoleUsers::deleteByRoleIdAndMenuId($data['roleId'], $userIdArr);
+        AssertsHelper::notNull($result, ResponseCode::getMessage(ResponseCode::FAILED));
     }
 }

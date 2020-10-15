@@ -152,6 +152,91 @@
                 }
             }
         },
+        "V1SystemMenuGetListGetResponse200DataData": false,
+        "V1SystemMenuGetListGetResponse200Data": {
+            "properties": {
+                "current_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "data": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "#/definitions/V1SystemMenuGetListGetResponse200DataData"
+                    }
+                },
+                "first_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "from": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "last_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "last_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "next_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "path": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/"
+                },
+                "per_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 10
+                },
+                "prev_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "to": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "total": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 0
+                }
+            }
+        },
+        "V1SystemMenuGetListGetResponse200": {
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 200
+                },
+                "message": {
+                    "type": "string",
+                    "description": "",
+                    "default": "operation successful."
+                },
+                "data": {
+                    "description": "",
+                    "$ref": "#/definitions/V1SystemMenuGetListGetResponse200Data"
+                }
+            }
+        },
         "PostV1SystemRoleAdd": {
             "type": "object",
             "properties": {
@@ -191,6 +276,39 @@
                 }
             }
         },
+        "PostV1SystemMenuAdd": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "类型"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "标题"
+                },
+                "parentId": {
+                    "type": "string",
+                    "description": "父id"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "子id"
+                },
+                "order": {
+                    "type": "string",
+                    "description": "排序编号"
+                },
+                "icon": {
+                    "type": "string",
+                    "description": "图标"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "菜单路由"
+                }
+            }
+        },
         "DeleteV1SystemRoleDelete": {
             "type": "object",
             "properties": {
@@ -199,12 +317,110 @@
                     "description": "角色id"
                 }
             }
+        },
+        "DeleteV1SystemRoleDeleteMenu": {
+            "type": "object",
+            "properties": {
+                "roleId": {
+                    "type": "string",
+                    "description": "角色id"
+                },
+                "menuIds": {
+                    "type": "string",
+                    "description": "菜单id多个菜单id使用逗号隔开"
+                }
+            },
+            "required": [
+                "roleId",
+                "menuIds"
+            ]
+        },
+        "DeleteV1SystemRoleDeleteUser": {
+            "type": "object",
+            "properties": {
+                "roleId": {
+                    "type": "string",
+                    "description": "角色id"
+                },
+                "userIds": {
+                    "type": "string",
+                    "description": "用户id多个用户id使用逗号隔开"
+                }
+            },
+            "required": [
+                "roleId",
+                "userIds"
+            ]
+        },
+        "DeleteV1SystemMenuDelete": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "业务id"
+                }
+            }
+        },
+        "PutV1SystemRoleUpdate": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "角色id"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "角色名称"
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "角色块"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "slug"
+            ]
+        },
+        "PutV1SystemMenuEdit": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "类型"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "标题"
+                },
+                "parentId": {
+                    "type": "string",
+                    "description": "父id"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "子id"
+                },
+                "order": {
+                    "type": "string",
+                    "description": "排序编号"
+                },
+                "icon": {
+                    "type": "string",
+                    "description": "图标"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "菜单路由"
+                }
+            }
         }
     },
     "tags": [
         {
             "name": "角色管理",
-            "description": "角色的新增/修改/删除/添加菜单/删除菜单/添加用户/删除用户接口"
+            "description": "系统菜单增加/删除/修改/编辑"
         }
     ],
     "paths": {
@@ -253,6 +469,60 @@
                         }
                     }
                 }
+            }
+        },
+        "/v1/system/menu/getList": {
+            "get": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "菜单列表",
+                "operationId": "V1SystemMenuGetListGET",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "页码",
+                        "required": false,
+                        "type": "string",
+                        "default": "1"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "description": "分页数",
+                        "required": false,
+                        "type": "string",
+                        "default": "10"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表信息",
+                        "schema": {
+                            "$ref": "#/definitions/V1SystemMenuGetListGetResponse200"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/menu/toTree": {
+            "get": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "菜单树",
+                "operationId": "V1SystemMenuToTreeGET",
+                "parameters": [],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": []
             }
         },
         "/v1/system/role/add": {
@@ -420,6 +690,61 @@
                 ]
             }
         },
+        "/v1/system/menu/add": {
+            "post": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "创建菜单",
+                "operationId": "V1SystemMenuAddPOST",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PostV1SystemMenuAdd"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
         "/v1/system/role/delete": {
             "delete": {
                 "tags": [
@@ -444,6 +769,281 @@
                         "required": false,
                         "schema": {
                             "$ref": "#/definitions/DeleteV1SystemRoleDelete"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/v1/system/role/delete/menu": {
+            "delete": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "删除角色菜单",
+                "operationId": "V1SystemRoleDeleteMenuDELETE",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteV1SystemRoleDeleteMenu"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/v1/system/role/delete/user": {
+            "delete": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "删除角色用户",
+                "operationId": "V1SystemRoleDeleteUserDELETE",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteV1SystemRoleDeleteUser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/v1/system/menu/delete": {
+            "delete": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "删除菜单",
+                "operationId": "V1SystemMenuDeleteDELETE",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteV1SystemMenuDelete"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/v1/system/role/update": {
+            "put": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "修改角色",
+                "operationId": "V1SystemRoleUpdatePUT",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PutV1SystemRoleUpdate"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/RoleOkResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/RoleValidateFailResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "操作失败",
+                        "schema": {
+                            "$ref": "#/definitions/RoleFailResponse"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/v1/system/menu/edit": {
+            "put": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "编辑菜单",
+                "operationId": "V1SystemMenuEditPUT",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "description": "设置为application/json",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PutV1SystemMenuEdit"
                         }
                     }
                 ],
