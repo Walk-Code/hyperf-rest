@@ -32,7 +32,12 @@ class ResponseCode extends AbstractConstants {
     const FAILED = 500;
 
     /**
-     * @Message("record does not exist.")
+     * @Message("not found")
      */
     const NO_FOUND = 404;
+
+    /**
+     * @Message("Unauthorized")
+     */
+    const NO_AUTH = 401;
 }

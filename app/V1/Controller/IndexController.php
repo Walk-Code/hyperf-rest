@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace App\V1\Controller;
 
+use App\Annotation\Auth;
 use App\Base\Controller\AbstractController;
 use App\Exception\Utils\AssertsHelper;
 use Hyperf\Di\Annotation\Inject;
@@ -23,14 +24,11 @@ use League\Flysystem\Filesystem;
 use Psr\Log\LoggerInterface;
 
 /**
+ *
  * Class IndexController
  * @package App\V1\Controller
  */
 class IndexController extends AbstractController {
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
 
     /**
      * @Inject
@@ -38,10 +36,17 @@ class IndexController extends AbstractController {
      */
     protected $request;
 
-    public function __construct(LoggerFactory $loggerFactory) {
-        $this->logger = $loggerFactory->get('default');
+    public function __construct() {
     }
 
+    /**
+     * @Auth()
+     * @param Filesystem $filesystem
+     * Created by PhpStorm.
+     * User: walk-code
+     * Date: 2020/10/19
+     * Time: 17:45
+     */
     public function index(Filesystem $filesystem) {
         $redis                 = ApplicationContext::getContainer()->get(Redis::class);
         $fileName = 'apache-jmeter-4.0.rar';
