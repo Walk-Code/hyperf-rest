@@ -15,7 +15,10 @@ use App\Constants\BusinessCode;
 use App\Constants\ResponseCode;
 use App\Exception\Utils\AssertsHelper;
 use App\Utils\AdminUserPasswordHelper;
+use App\Utils\AuthorizationHelper;
 use Hyperf\Di\Annotation\Inject;
+use Hyperf\Logger\LoggerFactory;
+use Psr\Log\LoggerInterface;
 
 class LoginServiceImpl implements LoginService {
 
@@ -24,6 +27,21 @@ class LoginServiceImpl implements LoginService {
      * @var AdminUserPasswordHelper
      */
     private $adminUserPasswrodHelper;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @Inject
+     * @var AuthorizationHelper
+     */
+    private $authHelper;
+
+    public function __construct(LoggerFactory $loggerFactory) {
+        $this->logger = $loggerFactory->get('log', 'default');
+    }
 
     /**
      * 登录验证
@@ -38,9 +56,12 @@ class LoginServiceImpl implements LoginService {
      */
     public function loginValidate($username, $password) {
         $user = User::findByUserName($username);
-        AssertsHelper::notNull($user, ResponseCode::getMessage(ResponseCode::NO_FOUND));
+        AssertsHelper::notNull($user, BusinessCode::getMessage(BusinessCode::AUTH_USER_NOT_FOUND));
         $encryptPassworded = $this->adminUserPasswrodHelper->createEncrypPassword($password);
         AssertsHelper::notNull($encryptPassworded == $user->password, BusinessCode::getMessage(BusinessCode::LOGIN_FAIL));
+        unset($user->password);
+        $this->authHelper->setUserInfo($user);
+        $this->authHelper->setPermissionList($this->getPermission($user->id));
 
         return $user;
     }
@@ -71,4 +92,6 @@ class LoginServiceImpl implements LoginService {
     public function getPermission($systemUserId) {
         return User::getPermission($systemUserId);
     }
+
+
 }

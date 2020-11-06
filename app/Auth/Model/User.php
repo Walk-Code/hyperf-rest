@@ -96,7 +96,7 @@ class User extends Model {
         $sql     .= 'LEFT JOIN admin_role_menu T3 ON T3.role_id = T2.role_id ';
         $sql     .= 'LEFT JOIN admin_menu T4 ON T4.id = T3.menu_id ';
         $sql     .= 'WHERE T1.id = ? ';
-        $sql     .= 'AND T4.status = 1 ';
+        $sql     .= 'AND T4.status = 1; ';
         $data [] = $systemUserId;
 
         return Db::select($sql, $data);

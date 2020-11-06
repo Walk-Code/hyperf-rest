@@ -12,4 +12,5 @@ declare(strict_types=1);
 return [
     \App\Auth\Service\MenuService::class => \App\Auth\Service\Impl\MenuServiceImpl::class,
     \App\Auth\Service\RoleService::class => \App\Auth\Service\Impl\RoleServiceImpl::class,
+    \App\Auth\Service\LoginService::class => \App\Auth\Service\Impl\LoginServiceImpl::class,
 ];

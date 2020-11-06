@@ -309,6 +309,219 @@
                 }
             }
         },
+        "LoginOkResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 200,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "operation successful.",
+                    "type": "string"
+                },
+                "data": []
+            }
+        },
+        "LoginFailResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 500,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "operation fail.",
+                    "type": "string"
+                }
+            }
+        },
+        "LoginValidateFailResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 500,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "Params is invalid.",
+                    "type": "string"
+                }
+            }
+        },
+        "V1SystemUserLoginPostResponse200DataData": false,
+        "V1SystemUserLoginPostResponse200Data": {
+            "properties": {
+                "current_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "data": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "#/definitions/V1SystemUserLoginPostResponse200DataData"
+                    }
+                },
+                "first_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "from": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "last_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "last_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "next_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "path": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/"
+                },
+                "per_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 10
+                },
+                "prev_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "to": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "total": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 0
+                }
+            }
+        },
+        "V1SystemUserLoginPostResponse200": {
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 200
+                },
+                "message": {
+                    "type": "string",
+                    "description": "",
+                    "default": "operation successful."
+                },
+                "data": {
+                    "description": "",
+                    "$ref": "#/definitions/V1SystemUserLoginPostResponse200Data"
+                }
+            }
+        },
+        "V1SystemUserInfoPostResponse200DataData": false,
+        "V1SystemUserInfoPostResponse200Data": {
+            "properties": {
+                "current_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "data": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "#/definitions/V1SystemUserInfoPostResponse200DataData"
+                    }
+                },
+                "first_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "from": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "last_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "last_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "next_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "path": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/"
+                },
+                "per_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 10
+                },
+                "prev_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "to": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "total": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 0
+                }
+            }
+        },
+        "V1SystemUserInfoPostResponse200": {
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 200
+                },
+                "message": {
+                    "type": "string",
+                    "description": "",
+                    "default": "operation successful."
+                },
+                "data": {
+                    "description": "",
+                    "$ref": "#/definitions/V1SystemUserInfoPostResponse200Data"
+                }
+            }
+        },
         "PutV1SystemMenuEdit": {
             "type": "object",
             "properties": {
@@ -421,6 +634,14 @@
         {
             "name": "角色管理",
             "description": "角色的新增/修改/删除/添加菜单/删除菜单/添加用户/删除用户接口"
+        },
+        {
+            "name": "系统后台登录",
+            "description": "系统登录"
+        },
+        {
+            "name": "系统用户管理",
+            "description": "系统用户的新增/修改/删除/获取用户信息"
         }
     ],
     "paths": {
@@ -743,6 +964,84 @@
                 "consumes": [
                     "application/json"
                 ]
+            }
+        },
+        "/v1/system/user/login": {
+            "post": {
+                "tags": [
+                    "系统后台登录"
+                ],
+                "summary": "",
+                "description": "系统用户登录",
+                "operationId": "V1SystemUserLoginPOST",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "页码",
+                        "required": false,
+                        "type": "string",
+                        "default": "1"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "description": "分页数",
+                        "required": false,
+                        "type": "string",
+                        "default": "10"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表信息",
+                        "schema": {
+                            "$ref": "#/definitions/V1SystemUserLoginPostResponse200"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/user/info": {
+            "post": {
+                "tags": [
+                    "系统用户管理"
+                ],
+                "summary": "",
+                "description": "获取用户信息",
+                "operationId": "V1SystemUserInfoPOST",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "页码",
+                        "required": false,
+                        "type": "string",
+                        "default": "1"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "description": "分页数",
+                        "required": false,
+                        "type": "string",
+                        "default": "10"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表信息",
+                        "schema": {
+                            "$ref": "#/definitions/V1SystemUserInfoPostResponse200"
+                        }
+                    }
+                }
             }
         },
         "/v1/system/menu/edit": {

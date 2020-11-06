@@ -15,7 +15,7 @@ return [
             BASE_PATH . '/app',
         ],
         'ignore_annotations' => [
-            'mixin','Author','update'
+            'mixin','Author','update','package'
         ],
         'collectors' => [
 

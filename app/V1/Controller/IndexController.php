@@ -40,7 +40,6 @@ class IndexController extends AbstractController {
     }
 
     /**
-     * @Auth()
      * @param Filesystem $filesystem
      * Created by PhpStorm.
      * User: walk-code

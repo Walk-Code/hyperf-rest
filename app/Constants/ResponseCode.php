@@ -40,4 +40,5 @@ class ResponseCode extends AbstractConstants {
      * @Message("Unauthorized")
      */
     const NO_AUTH = 401;
+
 }

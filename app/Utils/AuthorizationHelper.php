@@ -83,7 +83,9 @@ class AuthorizationHelper {
      * Time: 15:34
      */
     public function setMenuMoudleList($menuModuleList = []): void {
-        $this->session->set(self::$MENU_KEY, $menuModuleList);
+        if (!$this->session->has(self::$MENU_KEY)) {
+            $this->session->set(self::$MENU_KEY, $menuModuleList);
+        }
     }
 
     /**
@@ -95,8 +97,8 @@ class AuthorizationHelper {
      *
      * @return object|null
      */
-    public function getUserInfo(): ?object {
-        $user = $this->session->get(self::$ADMIN_USER_KEY);
+    public function getUserInfo() {
+        $user = $this->session->get(self::$ADMIN_USER_KEY, null);
 
         return $user;
     }
@@ -111,7 +113,9 @@ class AuthorizationHelper {
      * Time: 15:38
      */
     public function setUserInfo($userInfo) {
-        $this->session->set(self::$ADMIN_USER_KEY, $userInfo);
+        if (!$this->session->has(self::$ADMIN_USER_KEY)) {
+            $this->session->set(self::$ADMIN_USER_KEY, $userInfo);
+        }
     }
 
     /**
@@ -135,7 +139,9 @@ class AuthorizationHelper {
      * Time: 15:46
      */
     public function setPermissionList($permissionList): void {
-        $this->session->set(self::$PERMISSION_KEY, $permissionList);
+        if (!$this->session->has(self::$PERMISSION_KEY)) {
+            $this->session->set(self::$PERMISSION_KEY, $permissionList);
+        }
     }
 
     /**
@@ -183,7 +189,8 @@ class AuthorizationHelper {
      */
     public function isPermission(...$p) : bool {
         $permissionArr = $this->session->get(self::$PERMISSION_KEY);
-        return $this->isRole('root') || $this->isExtisInAarry($permissionArr, $p);
+        var_dump($permissionArr);
+        return $this->isExtisInAarry($permissionArr, $p);
     }
 
     /**
