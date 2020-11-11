@@ -19,7 +19,7 @@ use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Contract\RequestInterface;
 
 /**
- * @Middleware(ValidateJWTMiddleware::class)
+ * @Middleware(ValidateTokenMiddleware  ::class)
  * @ApiVersion(version="v1")
  * @ApiController(tag="系统用户管理", description="系统用户的新增/修改/删除/获取用户信息")
  * * @ApiDefinitions({

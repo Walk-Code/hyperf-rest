@@ -17,6 +17,6 @@ return [
     'http' => [
         \Hyperf\Session\Middleware\SessionMiddleware::class,
        ApiValidationMiddleware::class,
-        \App\Middleware\ValidateJWTMiddleware::class
+        \App\Middleware\ValidateTokenMiddleware::class
     ],
 ];

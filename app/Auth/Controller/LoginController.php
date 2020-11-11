@@ -79,7 +79,7 @@ class LoginController {
         $passwrod = $this->request->input('password');
 
         $systemUser = $this->loginService->loginValidate($username, $passwrod);
-        $jwt = $this->jwtHelper::getInstance()->createToken($systemUser);
+        $jwt = $this->jwtHelper::getInstance()->setUserId($systemUser->id)->createToken($systemUser);
 
         ResponseHelper::success(ResponseCode::SUCCESS, ResponseCode::getMessage(ResponseCode::SUCCESS), $jwt);
     }

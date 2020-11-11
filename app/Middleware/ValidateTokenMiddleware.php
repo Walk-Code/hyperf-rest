@@ -16,7 +16,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class ValidateJWTMiddleware implements MiddlewareInterface {
+class ValidateTokenMiddleware implements MiddlewareInterface {
     /**
      * @var ContainerInterface
      */
@@ -39,7 +39,7 @@ class ValidateJWTMiddleware implements MiddlewareInterface {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
-        $jwt = $request->withHeader('Authorization', '');
+        $jwt = $request->getHeader('Authorization');
         var_dump($jwt);
         $jwt = str_replace('Bearer ', '', $jwt);
         AssertsHelper::notNull($jwt,BusinessCode::getMessage(BusinessCode::TOKEN_IS_INVALID), BusinessCode::TOKEN_IS_INVALID);

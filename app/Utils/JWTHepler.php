@@ -47,6 +47,12 @@ class JWTHepler {
      */
     public $redis;
 
+    /**
+     * 用户id
+     * @var
+     */
+    private $userId;
+
 
     public static $instance = null;
 
@@ -79,14 +85,14 @@ class JWTHepler {
      *
      * @param array $user
      */
-    public function createToken($user = []) {
+    public function createToken() {
         $payload = [
             'iss' => 'walk_code',
             'aud' => 'walk_code.com',// walk_code.com
             'lat' => time(),
             'exp' => time() + 7600,
             'nbf ' => 0,
-            'userId' => 1
+            'userId' => $this->getUserId()
         ];
         var_dump($this->privateKey);
         $jwt = JWT::encode($payload, $this->privateKey, 'RS256');
@@ -102,9 +108,6 @@ class JWTHepler {
      * User: walk-code
      * Date: 2020/11/4
      * Time: 15:19
-     *
-     *
-     *
      *
      * @param $jwt
      */
@@ -123,5 +126,24 @@ class JWTHepler {
         }catch (\Exception $e){
             throw new BusinessException($e->getCode(), $e->getMessage());
         }
+    }
+
+    /**
+     * 设置userId
+     * Created by PhpStorm.
+     * User: walk-code
+     * Date: 2020/11/9
+     * Time: 16:52
+     *
+     * @param $userId
+     */
+    public function setUserId($userId) {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function getUserId() {
+        return $this->userId;
     }
 }
