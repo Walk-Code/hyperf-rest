@@ -24,7 +24,6 @@ class FileHelper {
      * @return string
      */
     public function getContent($filePath) {
-        var_dump($filePath);
         if (file_exists($filePath)) {
             $str = '';
             $fileArr = file($filePath);

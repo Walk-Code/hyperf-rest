@@ -16,7 +16,6 @@ use  Hyperf\Apidog\Middleware\ApiValidationMiddleware;
 return [
     'http' => [
         \Hyperf\Session\Middleware\SessionMiddleware::class,
-       ApiValidationMiddleware::class,
-        \App\Middleware\ValidateTokenMiddleware::class
+       ApiValidationMiddleware::class
     ],
 ];

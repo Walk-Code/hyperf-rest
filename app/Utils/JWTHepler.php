@@ -9,6 +9,7 @@
 namespace App\Utils;
 
 
+use App\Auth\Service\UserService;
 use App\Constants\BusinessCode;
 use App\Exception\Core\BusinessException;
 use Firebase\JWT\BeforeValidException;
@@ -53,7 +54,6 @@ class JWTHepler {
      */
     private $userId;
 
-
     public static $instance = null;
 
     public function __construct() {
@@ -94,7 +94,6 @@ class JWTHepler {
             'nbf ' => 0,
             'userId' => $this->getUserId()
         ];
-        var_dump($this->privateKey);
         $jwt = JWT::encode($payload, $this->privateKey, 'RS256');
         $encodeUser = md5(1);
         $this->redis->set('access_token_'.$encodeUser, $jwt);
@@ -112,10 +111,10 @@ class JWTHepler {
      * @param $jwt
      */
     public function parseToken($jwt) {
+        // TODO 结合rdids对token进行白名单处理
         try{
-            var_dump($this->publicKey);
             $decode = JWT::decode($jwt, $this->publicKey, ['RS256']);
-            var_dump($decode);
+
             return (array)$decode;
         } catch (SignatureInvalidException $e) {
             throw new BusinessException(BusinessCode::TOKEN_SIGNATURE_INVALID, BusinessCode::getMessage(BusinessCode::TOKEN_SIGNATURE_INVALID));

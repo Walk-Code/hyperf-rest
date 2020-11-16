@@ -10,6 +10,148 @@
         "http"
     ],
     "definitions": {
+        "LoginOkResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 200,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "operation successful.",
+                    "type": "string"
+                },
+                "data": []
+            }
+        },
+        "LoginFailResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 500,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "operation fail.",
+                    "type": "string"
+                }
+            }
+        },
+        "LoginValidateFailResponse": {
+            "properties": {
+                "status": {
+                    "description": "状态码",
+                    "default": 500,
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "响应信息",
+                    "default": "Params is invalid.",
+                    "type": "string"
+                }
+            }
+        },
+        "ModelArray": {
+            "type": "array",
+            "required": [],
+            "items": {
+                "type": "string"
+            }
+        },
+        "ModelObject": {
+            "type": "object",
+            "required": [],
+            "items": {
+                "type": "string"
+            }
+        },
+        "V1SystemUserLoginPostResponse200DataData": false,
+        "V1SystemUserLoginPostResponse200Data": {
+            "properties": {
+                "current_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "data": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "#/definitions/V1SystemUserLoginPostResponse200DataData"
+                    }
+                },
+                "first_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "from": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "last_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 1
+                },
+                "last_page_url": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/?page=1"
+                },
+                "next_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "path": {
+                    "type": "string",
+                    "description": "",
+                    "default": "\\/"
+                },
+                "per_page": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 10
+                },
+                "prev_page_url": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "to": {
+                    "type": "NULL",
+                    "description": "",
+                    "default": null
+                },
+                "total": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 0
+                }
+            }
+        },
+        "V1SystemUserLoginPostResponse200": {
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "description": "",
+                    "default": 200
+                },
+                "message": {
+                    "type": "string",
+                    "description": "",
+                    "default": "operation successful."
+                },
+                "data": {
+                    "description": "",
+                    "$ref": "#/definitions/V1SystemUserLoginPostResponse200Data"
+                }
+            }
+        },
         "RoleOkResponse": {
             "properties": {
                 "status": {
@@ -53,18 +195,76 @@
                 }
             }
         },
-        "ModelArray": {
-            "type": "array",
-            "required": [],
-            "items": {
-                "type": "string"
+        "PostV1SystemMenuAdd": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "类型"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "标题"
+                },
+                "parentId": {
+                    "type": "string",
+                    "description": "父id"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "子id"
+                },
+                "order": {
+                    "type": "string",
+                    "description": "排序编号"
+                },
+                "icon": {
+                    "type": "string",
+                    "description": "图标"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "菜单路由"
+                }
             }
         },
-        "ModelObject": {
+        "PostV1SystemRoleAdd": {
             "type": "object",
-            "required": [],
-            "items": {
-                "type": "string"
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "角色名称"
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "角色块"
+                }
+            }
+        },
+        "PostV1SystemRoleAddMenu": {
+            "type": "object",
+            "properties": {
+                "menuIds": {
+                    "type": "string",
+                    "description": "菜单id,多个菜单id使用逗号隔开"
+                },
+                "roleId": {
+                    "type": "string",
+                    "description": "角色id"
+                }
+            }
+        },
+        "PostV1SystemRoleAddAdminUser": {
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "string",
+                    "description": "系统用户id,多个系统用户id使用逗号隔开"
+                },
+                "roleId": {
+                    "type": "string",
+                    "description": "角色id"
+                }
             }
         },
         "V1SystemMenuGetListGetResponse200DataData": false,
@@ -237,123 +437,8 @@
                 }
             }
         },
-        "PostV1SystemMenuAdd": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "type": "string",
-                    "description": "类型"
-                },
-                "title": {
-                    "type": "string",
-                    "description": "标题"
-                },
-                "parentId": {
-                    "type": "string",
-                    "description": "父id"
-                },
-                "id": {
-                    "type": "string",
-                    "description": "子id"
-                },
-                "order": {
-                    "type": "string",
-                    "description": "排序编号"
-                },
-                "icon": {
-                    "type": "string",
-                    "description": "图标"
-                },
-                "url": {
-                    "type": "string",
-                    "description": "菜单路由"
-                }
-            }
-        },
-        "PostV1SystemRoleAdd": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "角色名称"
-                },
-                "slug": {
-                    "type": "string",
-                    "description": "角色块"
-                }
-            }
-        },
-        "PostV1SystemRoleAddMenu": {
-            "type": "object",
-            "properties": {
-                "menuIds": {
-                    "type": "string",
-                    "description": "菜单id,多个菜单id使用逗号隔开"
-                },
-                "roleId": {
-                    "type": "string",
-                    "description": "角色id"
-                }
-            }
-        },
-        "PostV1SystemRoleAddAdminUser": {
-            "type": "object",
-            "properties": {
-                "userIds": {
-                    "type": "string",
-                    "description": "系统用户id,多个系统用户id使用逗号隔开"
-                },
-                "roleId": {
-                    "type": "string",
-                    "description": "角色id"
-                }
-            }
-        },
-        "LoginOkResponse": {
-            "properties": {
-                "status": {
-                    "description": "状态码",
-                    "default": 200,
-                    "type": "integer"
-                },
-                "message": {
-                    "description": "响应信息",
-                    "default": "operation successful.",
-                    "type": "string"
-                },
-                "data": []
-            }
-        },
-        "LoginFailResponse": {
-            "properties": {
-                "status": {
-                    "description": "状态码",
-                    "default": 500,
-                    "type": "integer"
-                },
-                "message": {
-                    "description": "响应信息",
-                    "default": "operation fail.",
-                    "type": "string"
-                }
-            }
-        },
-        "LoginValidateFailResponse": {
-            "properties": {
-                "status": {
-                    "description": "状态码",
-                    "default": 500,
-                    "type": "integer"
-                },
-                "message": {
-                    "description": "响应信息",
-                    "default": "Params is invalid.",
-                    "type": "string"
-                }
-            }
-        },
-        "V1SystemUserLoginPostResponse200DataData": false,
-        "V1SystemUserLoginPostResponse200Data": {
+        "V1SystemUserInfoGetResponse200DataData": false,
+        "V1SystemUserInfoGetResponse200Data": {
             "properties": {
                 "current_page": {
                     "type": "integer",
@@ -364,7 +449,7 @@
                     "type": "array",
                     "description": "",
                     "items": {
-                        "$ref": "#/definitions/V1SystemUserLoginPostResponse200DataData"
+                        "$ref": "#/definitions/V1SystemUserInfoGetResponse200DataData"
                     }
                 },
                 "first_page_url": {
@@ -419,7 +504,7 @@
                 }
             }
         },
-        "V1SystemUserLoginPostResponse200": {
+        "V1SystemUserInfoGetResponse200": {
             "properties": {
                 "status": {
                     "type": "integer",
@@ -433,92 +518,7 @@
                 },
                 "data": {
                     "description": "",
-                    "$ref": "#/definitions/V1SystemUserLoginPostResponse200Data"
-                }
-            }
-        },
-        "V1SystemUserInfoPostResponse200DataData": false,
-        "V1SystemUserInfoPostResponse200Data": {
-            "properties": {
-                "current_page": {
-                    "type": "integer",
-                    "description": "",
-                    "default": 1
-                },
-                "data": {
-                    "type": "array",
-                    "description": "",
-                    "items": {
-                        "$ref": "#/definitions/V1SystemUserInfoPostResponse200DataData"
-                    }
-                },
-                "first_page_url": {
-                    "type": "string",
-                    "description": "",
-                    "default": "\\/?page=1"
-                },
-                "from": {
-                    "type": "NULL",
-                    "description": "",
-                    "default": null
-                },
-                "last_page": {
-                    "type": "integer",
-                    "description": "",
-                    "default": 1
-                },
-                "last_page_url": {
-                    "type": "string",
-                    "description": "",
-                    "default": "\\/?page=1"
-                },
-                "next_page_url": {
-                    "type": "NULL",
-                    "description": "",
-                    "default": null
-                },
-                "path": {
-                    "type": "string",
-                    "description": "",
-                    "default": "\\/"
-                },
-                "per_page": {
-                    "type": "integer",
-                    "description": "",
-                    "default": 10
-                },
-                "prev_page_url": {
-                    "type": "NULL",
-                    "description": "",
-                    "default": null
-                },
-                "to": {
-                    "type": "NULL",
-                    "description": "",
-                    "default": null
-                },
-                "total": {
-                    "type": "integer",
-                    "description": "",
-                    "default": 0
-                }
-            }
-        },
-        "V1SystemUserInfoPostResponse200": {
-            "properties": {
-                "status": {
-                    "type": "integer",
-                    "description": "",
-                    "default": 200
-                },
-                "message": {
-                    "type": "string",
-                    "description": "",
-                    "default": "operation successful."
-                },
-                "data": {
-                    "description": "",
-                    "$ref": "#/definitions/V1SystemUserInfoPostResponse200Data"
+                    "$ref": "#/definitions/V1SystemUserInfoGetResponse200Data"
                 }
             }
         },
@@ -632,12 +632,12 @@
     },
     "tags": [
         {
-            "name": "角色管理",
-            "description": "角色的新增/修改/删除/添加菜单/删除菜单/添加用户/删除用户接口"
-        },
-        {
             "name": "系统后台登录",
             "description": "系统登录"
+        },
+        {
+            "name": "角色管理",
+            "description": "角色的新增/修改/删除/添加菜单/删除菜单/添加用户/删除用户接口"
         },
         {
             "name": "系统用户管理",
@@ -645,14 +645,14 @@
         }
     ],
     "paths": {
-        "/v1/system/menu/getList": {
-            "get": {
+        "/v1/system/user/login": {
+            "post": {
                 "tags": [
-                    "角色管理"
+                    "系统后台登录"
                 ],
                 "summary": "",
-                "description": "菜单列表",
-                "operationId": "V1SystemMenuGetListGET",
+                "description": "系统用户登录",
+                "operationId": "V1SystemUserLoginPOST",
                 "parameters": [
                     {
                         "in": "query",
@@ -678,69 +678,7 @@
                     "200": {
                         "description": "获取列表信息",
                         "schema": {
-                            "$ref": "#/definitions/V1SystemMenuGetListGetResponse200"
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/system/menu/toTree": {
-            "get": {
-                "tags": [
-                    "角色管理"
-                ],
-                "summary": "",
-                "description": "菜单树",
-                "operationId": "V1SystemMenuToTreeGET",
-                "parameters": [],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": []
-            }
-        },
-        "/v1/system/role/getList": {
-            "get": {
-                "tags": [
-                    "角色管理"
-                ],
-                "summary": "",
-                "description": "角色列表",
-                "operationId": "V1SystemRoleGetListGET",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "searchText",
-                        "description": "角色名称模糊搜索",
-                        "required": false,
-                        "type": "string",
-                        "default": null
-                    },
-                    {
-                        "in": "query",
-                        "name": "page",
-                        "description": "页码",
-                        "required": false,
-                        "type": "string",
-                        "default": "1"
-                    },
-                    {
-                        "in": "query",
-                        "name": "pageSize",
-                        "description": "分页数",
-                        "required": false,
-                        "type": "string",
-                        "default": "10"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "获取列表信息",
-                        "schema": {
-                            "$ref": "#/definitions/V1SystemRoleGetListGetResponse200"
+                            "$ref": "#/definitions/V1SystemUserLoginPostResponse200"
                         }
                     }
                 }
@@ -966,14 +904,14 @@
                 ]
             }
         },
-        "/v1/system/user/login": {
-            "post": {
+        "/v1/system/menu/getList": {
+            "get": {
                 "tags": [
-                    "系统后台登录"
+                    "角色管理"
                 ],
                 "summary": "",
-                "description": "系统用户登录",
-                "operationId": "V1SystemUserLoginPOST",
+                "description": "菜单列表",
+                "operationId": "V1SystemMenuGetListGET",
                 "parameters": [
                     {
                         "in": "query",
@@ -999,20 +937,82 @@
                     "200": {
                         "description": "获取列表信息",
                         "schema": {
-                            "$ref": "#/definitions/V1SystemUserLoginPostResponse200"
+                            "$ref": "#/definitions/V1SystemMenuGetListGetResponse200"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/menu/toTree": {
+            "get": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "菜单树",
+                "operationId": "V1SystemMenuToTreeGET",
+                "parameters": [],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": []
+            }
+        },
+        "/v1/system/role/getList": {
+            "get": {
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "",
+                "description": "角色列表",
+                "operationId": "V1SystemRoleGetListGET",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "searchText",
+                        "description": "角色名称模糊搜索",
+                        "required": false,
+                        "type": "string",
+                        "default": null
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "页码",
+                        "required": false,
+                        "type": "string",
+                        "default": "1"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "description": "分页数",
+                        "required": false,
+                        "type": "string",
+                        "default": "10"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表信息",
+                        "schema": {
+                            "$ref": "#/definitions/V1SystemRoleGetListGetResponse200"
                         }
                     }
                 }
             }
         },
         "/v1/system/user/info": {
-            "post": {
+            "get": {
                 "tags": [
                     "系统用户管理"
                 ],
                 "summary": "",
                 "description": "获取用户信息",
-                "operationId": "V1SystemUserInfoPOST",
+                "operationId": "V1SystemUserInfoGET",
                 "parameters": [
                     {
                         "in": "query",
@@ -1038,7 +1038,7 @@
                     "200": {
                         "description": "获取列表信息",
                         "schema": {
-                            "$ref": "#/definitions/V1SystemUserInfoPostResponse200"
+                            "$ref": "#/definitions/V1SystemUserInfoGetResponse200"
                         }
                     }
                 }

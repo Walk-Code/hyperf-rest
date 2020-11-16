@@ -21,5 +21,16 @@ interface UserService {
      */
     public function create($jsonArr);
 
-    
+
+    /**
+     * 通过用户id获取用户信息
+     * Created by PhpStorm.
+     * User: walk-code
+     * Date: 2020/11/13
+     * Time: 15:51
+     *
+     * @param $userId
+     * @return mixed
+     */
+    public function find($userId);
 }

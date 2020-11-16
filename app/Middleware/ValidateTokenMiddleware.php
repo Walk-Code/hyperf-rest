@@ -39,13 +39,14 @@ class ValidateTokenMiddleware implements MiddlewareInterface {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
-        $jwt = $request->getHeader('Authorization');
-        var_dump($jwt);
-        $jwt = str_replace('Bearer ', '', $jwt);
-        AssertsHelper::notNull($jwt,BusinessCode::getMessage(BusinessCode::TOKEN_IS_INVALID), BusinessCode::TOKEN_IS_INVALID);
-        $decode = $this->jwtHelper::getInstance()->parseToken($jwt);
+        $jwt = $request->getHeader('access_token');
+        AssertsHelper::notNull(isset($jwt[0]) , BusinessCode::getMessage(BusinessCode::TOKEN_IS_INVALID), BusinessCode::TOKEN_IS_INVALID);
+        $jwt = $jwt[0];
+        AssertsHelper::notNull($jwt, BusinessCode::getMessage(BusinessCode::TOKEN_IS_INVALID), BusinessCode::TOKEN_IS_INVALID);
 
+        $decode = $this->jwtHelper::getInstance()->parseToken($jwt);
         AssertsHelper::notNull($decode['iss'], BusinessCode::getMessage(BusinessCode::TOKEN_IS_INVALID), BusinessCode::TOKEN_IS_INVALID);
+        Context::set('userId', $decode['userId']);
 
         return $handler->handle($request);
     }

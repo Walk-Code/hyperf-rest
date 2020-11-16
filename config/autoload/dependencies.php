@@ -13,4 +13,5 @@ return [
     \App\Auth\Service\MenuService::class => \App\Auth\Service\Impl\MenuServiceImpl::class,
     \App\Auth\Service\RoleService::class => \App\Auth\Service\Impl\RoleServiceImpl::class,
     \App\Auth\Service\LoginService::class => \App\Auth\Service\Impl\LoginServiceImpl::class,
+    \App\Auth\Service\UserService::class => \App\Auth\Service\Impl\UserServiceImpl::class,
 ];

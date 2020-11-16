@@ -101,4 +101,17 @@ class User extends Model {
 
         return Db::select($sql, $data);
     }
+
+    /**
+     * 通过id获取用户信息
+     * Created by PhpStorm.
+     * User: walk-code
+     * Date: 2020/11/13
+     * Time: 15:51
+     *
+     * @param $id
+     */
+    public static function findById($userId) {
+        return User::query()->where('id', '=', $userId)->first();
+    }
 }
