@@ -96,7 +96,7 @@ class JWTHepler {
         ];
         $jwt = JWT::encode($payload, $this->privateKey, 'RS256');
         $encodeUser = md5(1);
-        $this->redis->set('access_token_'.$encodeUser, $jwt);
+        $this->redis->set('access_token_'.$encodeUser, $jwt, 7600);
 
         return $jwt;
     }

@@ -8,8 +8,8 @@ use Hyperf\Config\Annotation\Value;
 use Hyperf\Utils\Context;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 class CorsMiddleware implements MiddlewareInterface {
@@ -42,13 +42,11 @@ class CorsMiddleware implements MiddlewareInterface {
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
         $response = Context::get(ResponseInterface::class);
-        $response = $response->withHeader('Access-Control-Allow-Origin', $this->origin)
-                                ->withHeader('Access-Control-Allow-Credentials', true)
-                                ->withHeader('Access-Control-Allow-Headers', $this->headers)
-                                ->withHeader('Access-Control-Allow-Methods', $this->methods)
-                                ->withHeader('Access-Control-Max-Age', '3600');
-
-        Context::set(ResponseInterface::class, $response);
+        $response = $response->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Credentials', true)
+            ->withHeader('Access-Control-Allow-Headers', $this->headers)
+            ->withHeader('Access-Control-Allow-Methods', $this->methods)
+            ->withHeader('Access-Control-Max-Age', '3600');
 
         if ($request->getMethod() == 'OPTIONS') {
             return $response;

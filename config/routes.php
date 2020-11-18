@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use App\Middleware\CorsMiddleware;
+use App\Middleware\ValidateTokenMiddleware;
 use Hyperf\HttpServer\Router\Router;
 
 /**
@@ -33,7 +34,8 @@ Router::addGroup('/v1/system', function () {
     #Router::addRoute(['DELETE', 'HEAD', 'OPTIONS'], '/role/delete', 'App\Auth\Controller\RoleController@delete', ['middleware' => [CorsMiddleware::class]]);
     #Router::addRoute(['PUT', 'HEAD', 'OPTIONS'], '/role/update', 'App\Auth\Controller\RoleController@update', ['middleware' => [CorsMiddleware::class]]);
     #Router::addRoute(['DELETE', 'HEAD', 'OPTIONS'], '/role/delete/menu', 'App\Auth\Controller\RoleController@deleteMenu', ['middleware' => [CorsMiddleware::class]]);
-    #Router::addRoute(['DELETE', 'HEAD', 'OPTIONS'], '/role/delete/user', 'App\Auth\Controller\RoleController@deleteUser', ['middleware' => [CorsMiddleware::class]]);
+    Router::addRoute(['POST', 'HEAD', 'OPTIONS'], '/user/login', 'App\Auth\Controller\LoginController@postLogin', ['middleware' => [CorsMiddleware::class]]);
+    Router::addRoute(['GET', 'HEAD', 'OPTIONS'], '/user/info', 'App\Auth\Controller\UserController@getUserInfo', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
 });
 
 

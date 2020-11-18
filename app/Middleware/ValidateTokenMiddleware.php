@@ -43,7 +43,6 @@ class ValidateTokenMiddleware implements MiddlewareInterface {
         AssertsHelper::notNull(isset($jwt[0]) , BusinessCode::getMessage(BusinessCode::TOKEN_IS_INVALID), BusinessCode::TOKEN_IS_INVALID);
         $jwt = $jwt[0];
         AssertsHelper::notNull($jwt, BusinessCode::getMessage(BusinessCode::TOKEN_IS_INVALID), BusinessCode::TOKEN_IS_INVALID);
-
         $decode = $this->jwtHelper::getInstance()->parseToken($jwt);
         AssertsHelper::notNull($decode['iss'], BusinessCode::getMessage(BusinessCode::TOKEN_IS_INVALID), BusinessCode::TOKEN_IS_INVALID);
         Context::set('userId', $decode['userId']);

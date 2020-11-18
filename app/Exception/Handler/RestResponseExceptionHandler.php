@@ -6,6 +6,7 @@ namespace App\Exception\Handler;
 
 use App\Annotation\HttpRequestLog;
 use App\Exception\Core\BusinessException;
+use Hyperf\Config\Annotation\Value;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\ExceptionHandler\ExceptionHandler;
 use Hyperf\HttpMessage\Stream\SwooleStream;
@@ -19,6 +20,24 @@ use Throwable;
  * @package App\Exception\Handler
  */
 class RestResponseExceptionHandler extends ExceptionHandler {
+    /**
+     * @Value("cors.origin")
+     * @var $origin
+     */
+    private $origin;
+
+    /**
+     * @Value("cors.headers")
+     * @var $headers
+     */
+    private $headers;
+
+    /**
+     * @Value("cors.methods")
+     * @var $methods
+     */
+    private $methods;
+
 
     /**
      * @HttpRequestLog
@@ -33,7 +52,13 @@ class RestResponseExceptionHandler extends ExceptionHandler {
             $responseBody = json_encode($data, JSON_UNESCAPED_UNICODE);
             // 阻止异常冒泡
             $this->stopPropagation();
-            return $response->withHeader('Content-type', 'application/json; charset=utf-8')->withStatus(200)->withBody(new SwooleStream($responseBody));
+            return $response->withHeader('Access-Control-Allow-Origin', $this->origin)
+                ->withHeader('Access-Control-Allow-Credentials', true)
+                ->withHeader('Access-Control-Allow-Headers', $this->headers)
+                ->withHeader('Access-Control-Max-Age', '3600')
+                ->withHeader('Access-Control-Allow-Methods', $this->methods)
+                ->withHeader('Content-type', 'application/json; charset=utf-8')
+                ->withStatus(200)->withBody(new SwooleStream($responseBody));
         }
 
         return $response;
