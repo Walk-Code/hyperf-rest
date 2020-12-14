@@ -30,7 +30,7 @@ class Role extends Model {
      * @param $roleIds
      */
     public static function getRoleMenuList($roleIds) {
-        $sql = 'SELECT T2.* FROM admin_roles T1 ';
+        $sql = 'SELECT T2.* FROM system_role T1 ';
         $sql .= 'LEFT JOIN admin_role_menu T2 ON T1.id = T2.role_id ';
         $sql .= 'WHERE T1.id IN (?) ';
 

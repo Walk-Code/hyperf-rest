@@ -39,5 +39,5 @@ class BusinessCode extends AbstractConstants {
     /**
      * @Message("token expired")
      */
-    const TOKEN_EXPIRED = 10006;
+    const TOKEN_EXPIRED = 401;
 }

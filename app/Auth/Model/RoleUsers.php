@@ -7,7 +7,7 @@ namespace App\Auth\Model;
 use Hyperf\DbConnection\Model\Model;
 
 class RoleUsers extends Model {
-    protected $table = 'role_users';
+    protected $table = 'system_user_group_role';
 
     protected $connection = 'system';
 

@@ -60,8 +60,8 @@ class LoginServiceImpl implements LoginService {
         $encryptPassworded = $this->adminUserPasswrodHelper->createEncrypPassword($password);
         AssertsHelper::notNull($encryptPassworded == $user->password, BusinessCode::getMessage(BusinessCode::LOGIN_FAIL));
         unset($user->password);
-        $this->authHelper->setUserInfo($user);
-        $this->authHelper->setPermissionList($this->getPermission($user->id));
+        // $this->authHelper->setUserInfo($user);
+        // $this->authHelper->setPermissionList($this->getPermission($user->id));
 
         return $user;
     }

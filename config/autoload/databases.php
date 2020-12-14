@@ -53,7 +53,7 @@ return [
         'password'  => env('DB_SYSTEM_PASSWORD', ''),
         'charset'   => env('DB_SYSTEM_CHARSET', 'utf8'),
         'collation' => env('DB_SYSTEM_COLLATION', 'utf8_unicode_ci'),
-        'prefix'    => env('DB_SYSTEM_PREFIX', ''),
+        'prefix'    => env('DB_SYSTEM_PREFIX', ''),// FetchMode
         'pool'      => [
             'min_connections' => 1,
             'max_connections' => 10,

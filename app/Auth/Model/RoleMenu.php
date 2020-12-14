@@ -7,7 +7,7 @@ namespace App\Auth\Model;
 use Hyperf\DbConnection\Model\Model;
 
 class RoleMenu extends Model {
-    protected $table = 'role_menu';
+    protected $table = 'system_role_menu_mapping';
 
     protected $connection = 'system';
 

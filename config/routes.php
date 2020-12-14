@@ -36,6 +36,13 @@ Router::addGroup('/v1/system', function () {
     #Router::addRoute(['DELETE', 'HEAD', 'OPTIONS'], '/role/delete/menu', 'App\Auth\Controller\RoleController@deleteMenu', ['middleware' => [CorsMiddleware::class]]);
     Router::addRoute(['POST', 'HEAD', 'OPTIONS'], '/user/login', 'App\Auth\Controller\LoginController@postLogin', ['middleware' => [CorsMiddleware::class]]);
     Router::addRoute(['GET', 'HEAD', 'OPTIONS'], '/user/info', 'App\Auth\Controller\UserController@getUserInfo', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
+    Router::addRoute(['GET', 'HEAD', 'OPTIONS'], '/menu/leftMenu', 'App\Auth\Controller\MenuController@getLeftMenus', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
+    Router::addRoute(['GET', 'HEAD', 'OPTIONS'], '/menu/getList', 'App\Auth\Controller\MenuController@getList', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
+    Router::addRoute(['GET', 'HEAD', 'OPTIONS'], '/menu/tree', 'App\Auth\Controller\MenuController@toTree', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
+    Router::addRoute(['POST', 'HEAD', 'OPTIONS'], '/menu/create', 'App\Auth\Controller\MenuController@create', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
+    Router::addRoute(['GET', 'HEAD', 'OPTIONS'], '/menu/getTreeSelectData', 'App\Auth\Controller\MenuController@getTreeSelectData', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
+    Router::addRoute(['POST', 'HEAD', 'OPTIONS'], '/menu/addOrUpdate', 'App\Auth\Controller\MenuController@addOrUpdate', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
+    Router::addRoute(['DELETE', 'HEAD', 'OPTIONS'], '/menu/del', 'App\Auth\Controller\MenuController@del', ['middleware' => [CorsMiddleware::class, ValidateTokenMiddleware::class]]);
 });
 
 

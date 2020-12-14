@@ -9,7 +9,7 @@ use Hyperf\DbConnection\Db;
 use Hyperf\DbConnection\Model\Model;
 
 class User extends Model {
-    protected $table = 'users';
+    protected $table = 'user';
 
     protected $connection = 'system';
 
@@ -91,7 +91,7 @@ class User extends Model {
      * Time: 17:38
      */
     public static function getPermission($systemUserId) {
-        $sql     = 'SELECT T4.* FROM admin_users T1 ';
+        $sql     = 'SELECT T4.* FROM system_user T1 ';
         $sql     .= 'LEFT JOIN admin_role_users T2 ON T1.id = T2.user_id ';
         $sql     .= 'LEFT JOIN admin_role_menu T3 ON T3.role_id = T2.role_id ';
         $sql     .= 'LEFT JOIN admin_menu T4 ON T4.id = T3.menu_id ';
